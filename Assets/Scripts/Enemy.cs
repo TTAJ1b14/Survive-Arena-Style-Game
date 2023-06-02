@@ -21,8 +21,11 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+         if (transform.position.y >-1)
+        {
         Vector3 lookDirection = (player.transform.position - transform.position).normalized;
         enemyRb.AddForce(lookDirection * (speed + spawnManagerScript.waveNumber * 5));
+        }
 
 
         if (transform.position.y < -15)

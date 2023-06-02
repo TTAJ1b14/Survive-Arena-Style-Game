@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     public GameObject[] enemyPrefab;
-    public GameObject powerUpPrefab;
+    public GameObject[] powerupPrefabs;
 
     private float spawnRange = 9;
 
@@ -19,7 +19,11 @@ public class SpawnManager : MonoBehaviour
     void Start()
     {
         SpawnEnemyWave(waveNumber);
-        Instantiate(powerUpPrefab, GenerateSpawnPosition(), powerUpPrefab.transform.rotation);
+
+        int randomPowerup = Random.Range(0, powerupPrefabs.Length);
+        Instantiate(powerupPrefabs[randomPowerup], GenerateSpawnPosition(),
+        powerupPrefabs[randomPowerup].transform.rotation);
+
     }
 
     //limit current difficulty to be no longer than array length
@@ -57,7 +61,10 @@ public class SpawnManager : MonoBehaviour
             waveNumber++;
             difficult = waveNumber / 2;
             SpawnEnemyWave(waveNumber);
-            Instantiate(powerUpPrefab, GenerateSpawnPosition(), powerUpPrefab.transform.rotation);
+            
+            int randomPowerup = Random.Range(0, powerupPrefabs.Length);
+            Instantiate(powerupPrefabs[randomPowerup], GenerateSpawnPosition(),
+            powerupPrefabs[randomPowerup].transform.rotation);
         }
     }
 
