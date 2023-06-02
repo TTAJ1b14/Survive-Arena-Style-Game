@@ -396,6 +396,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 700945808}
+  - component: {fileID: 700945809}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -418,6 +419,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &700945809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 700945807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9e913150321b4247bc2b72251a13862, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &927841847
 GameObject:
   m_ObjectHideFlags: 0
@@ -1080,7 +1093,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d191846f926a1642a6e1a158c5c20ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrafab: {fileID: 3814266072024751723, guid: 6910711f1a31f9742aaf0208199c10b6, type: 3}
+  enemyPrefab:
+  - {fileID: 3814266072024751723, guid: 6910711f1a31f9742aaf0208199c10b6, type: 3}
+  - {fileID: 5477527043576791012, guid: dda70eebc30c41d49b0ea2a595658134, type: 3}
+  - {fileID: 6840031888928446222, guid: 8a46912ff248cb4448a007d337fd38a6, type: 3}
   powerUpPrefab: {fileID: 4095620245738606655, guid: f077f38b624099146b64feb153803f03, type: 3}
   enemyCount: 0
   waveNumber: 0
