@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     private GameObject player;
 
     private SpawnManager spawnManagerScript;
+    private GameManager gameManager;
 
     // Boss 
     public bool isBoss = false;
@@ -18,8 +19,11 @@ public class Enemy : MonoBehaviour
     public int miniEnemySpawnCount;
 
 
+
     void Start()
     {
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+
         enemyRb = GetComponent<Rigidbody>();
         player = GameObject.Find("Player");
         if (isBoss)
@@ -32,11 +36,13 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (transform.position.y > -1)
+        if (gameManager.isGameActive)
         {
-            Vector3 lookDirection = (player.transform.position - transform.position).normalized;
-            enemyRb.AddForce(lookDirection * speed);
-        }
+            if (transform.position.y > -1)
+            {
+                Vector3 lookDirection = (player.transform.position - transform.position).normalized;
+                enemyRb.AddForce(lookDirection * speed);
+            }
             if (isBoss)
             {
                 if (Time.time > nextSpawn)
@@ -46,9 +52,11 @@ public class Enemy : MonoBehaviour
                 }
             }
 
-        if (transform.position.y < -15)
-        {
-            Destroy(gameObject);
+            if (transform.position.y < -15)
+            {
+                Destroy(gameObject);
+            }
         }
+        else return;
     }
 }

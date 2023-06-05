@@ -9,6 +9,9 @@ public class SpawnManager : MonoBehaviour
 
     public GameObject bossPrefab;
     public GameObject[] miniEnemyPrefabs;
+
+
+    private GameManager gameManager;
     public int bossRound;
 
     private float spawnRange = 9;
@@ -22,11 +25,20 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SpawnEnemyWave(waveNumber);
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
 
-        int randomPowerup = Random.Range(0, powerupPrefabs.Length);
-        Instantiate(powerupPrefabs[randomPowerup], GenerateSpawnPosition(),
-        powerupPrefabs[randomPowerup].transform.rotation);
+        if (gameManager.isGameActive)
+        {
+            SpawnEnemyWave(waveNumber);
+
+            int randomPowerup = Random.Range(0, powerupPrefabs.Length);
+            Instantiate(powerupPrefabs[randomPowerup], GenerateSpawnPosition(),
+            powerupPrefabs[randomPowerup].transform.rotation);
+
+            Debug.Log("Fail");
+        }
+        else return;
+
 
     }
 
@@ -59,28 +71,32 @@ public class SpawnManager : MonoBehaviour
     //increase difficulty depending on the waveNumber
     void Update()
     {
-        enemyCount = FindObjectsOfType<Enemy>().Length;
-
-        if (enemyCount == 0)
+        if (gameManager.isGameActive)
         {
-            waveNumber++;
+            enemyCount = FindObjectsOfType<Enemy>().Length;
 
-            // Spawn Boss
-            if (waveNumber % bossRound == 0)
+            if (enemyCount == 0)
             {
-                SpawnBossWave(waveNumber);
-            }
+                waveNumber++;
 
-            else
-            {
-                difficult = waveNumber / 2;
-                SpawnEnemyWave(waveNumber);
+                // Spawn Boss
+                if (waveNumber % bossRound == 0)
+                {
+                    SpawnBossWave(waveNumber);
+                }
 
-                int randomPowerup = Random.Range(0, powerupPrefabs.Length);
-                Instantiate(powerupPrefabs[randomPowerup], GenerateSpawnPosition(),
-                powerupPrefabs[randomPowerup].transform.rotation);
+                else
+                {
+                    difficult = waveNumber / 2;
+                    SpawnEnemyWave(waveNumber);
+
+                    int randomPowerup = Random.Range(0, powerupPrefabs.Length);
+                    Instantiate(powerupPrefabs[randomPowerup], GenerateSpawnPosition(),
+                    powerupPrefabs[randomPowerup].transform.rotation);
+                }
             }
         }
+
     }
 
     private Vector3 GenerateSpawnPosition()
