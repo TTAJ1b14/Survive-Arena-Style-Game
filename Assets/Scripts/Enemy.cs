@@ -10,28 +10,45 @@ public class Enemy : MonoBehaviour
     private GameObject player;
 
     private SpawnManager spawnManagerScript;
+
+    // Boss 
+    public bool isBoss = false;
+    public float spawnInterval;
+    float nextSpawn;
+    public int miniEnemySpawnCount;
+
+
     void Start()
     {
         enemyRb = GetComponent<Rigidbody>();
-        player = GameObject.Find("Player"); 
-
-        spawnManagerScript = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
+        player = GameObject.Find("Player");
+        if (isBoss)
+        {
+            spawnManagerScript = FindObjectOfType<SpawnManager>();
+        }
     }
+
 
     // Update is called once per frame
     void Update()
     {
-         if (transform.position.y >-1)
+        if (transform.position.y > -1)
         {
-        Vector3 lookDirection = (player.transform.position - transform.position).normalized;
-        enemyRb.AddForce(lookDirection * (speed + spawnManagerScript.waveNumber * 5));
+            Vector3 lookDirection = (player.transform.position - transform.position).normalized;
+            enemyRb.AddForce(lookDirection * speed);
         }
-
+            if (isBoss)
+            {
+                if (Time.time > nextSpawn)
+                {
+                    nextSpawn = Time.time + spawnInterval;
+                    spawnManagerScript.SpawnMiniEnemy(miniEnemySpawnCount);
+                }
+            }
 
         if (transform.position.y < -15)
         {
             Destroy(gameObject);
-    
         }
     }
 }
